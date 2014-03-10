@@ -21,12 +21,25 @@
 			</div>
 			<script id="share-template" type="text/x-handlebars-template">
 				<h2>Share</h2>
-				<pre>https://otp.sh/#{{ hash }}</pre>
-				<pre>{{ otp }}</pre>
+				<p>Send the link via email to your friend and tell him the OTP with another channel.</p>
+				<form class="form-horizontal" role="form">
+				<div class="form-group">
+					<label class="col-sm-2 control-label">URL</label>
+					<div class="col-sm-10">
+						<p class="form-control-static"><a href="https://otp.sh/#{{ hash }}">https://otp.sh/#{{ hash }}</a></p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">OTP</label>
+					<div class="col-sm-10">
+						<pre class="form-control-static">{{ otp }}</pre>
+					</div>
+				</div>
+				</form>
 			</script>
 			<script id="decrypt-template" type="text/x-handlebars-template">
 				<h2>Decrypt</h2>
-				<p>Insert your OTP to decrypt the message from the sender</p>
+				<p>Insert your OTP to decrypt the message from the sender.</p>
 				<form role="form" id="decrypt" method="post">
 					<div class="form-group">
 						<input type="text" class="form-control" placeholder="OTP" name="otp">
