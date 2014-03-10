@@ -7,35 +7,28 @@ db.on("error", console.log)
 function decrypt(data, password, cb) {
 	var decipher = crypto.createDecipher('AES-192-CBC', password)
 	var plain = Buffer.concat([decipher.update(data), decipher.final()])
-
 	return plain
 }
 
-exports.index = function(req, res) {
-	console.log(req.params.hash)
+exports.exists = function(req, res) {
 	db.get(req.params.hash, function(err, reply){
 		if(reply == null) {
-			res.render('error', {
-				message: 'Hash not found',
-				error: 'asdf'
-			})
+			res.json(404, { 'error': 'Hash not found' })
 			return
 		}
-		res.render('decrypt-index')
+		res.json(200, { 'message': 'Hash found' })
 	})
 };
 
 exports.decrypt = function(req, res) {
-	var password = req.params.hash+ req.body.otp
-	
+	var password = req.params.hash + req.body.otp
+
 	db.get(req.params.hash, function(err, data) {
-		console.log(password, data)
 		try {
 			plain = decrypt(data, password)
-			res.render('decrypt-result', { plain: plain })
+			res.json(200, { 'text': plain.toString('utf-8') })
 		} catch(err) {
-			console.log(err)
-			res.render('error', err)
+			res.json(403, { 'error': 'Decrypt not possible' })
 		}
 	})
 }

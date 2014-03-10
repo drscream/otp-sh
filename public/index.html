@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>otp.sh</title>
+
+		<!-- Bootstrap -->
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/otp.css" rel="stylesheet">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/handlebars-v1.3.0.js"></script>
+		<script src="js/otp.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<div class="page-header">
+				<h1>otp.sh</h1>
+			</div>
+			<script id="share-template" type="text/x-handlebars-template">
+				<h2>Share</h2>
+				<pre>https://otp.sh/#{{ hash }}</pre>
+				<pre>{{ otp }}</pre>
+			</script>
+			<script id="decrypt-template" type="text/x-handlebars-template">
+				<h2>Decrypt</h2>
+				<p>Insert your OTP to decrypt the message from the sender</p>
+				<form role="form" id="decrypt" method="post">
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="OTP" name="otp">
+					</div>
+					<button type="submit" class="btn btn-primary">Decrypt</button>
+				</form>
+			</script>
+			<script id="result-template" type="text/x-handlebars-template">
+				<h3>Decrypted</h3>
+				<p></p>
+				<pre>{{ text }}</pre>
+			</script>
+
+			<div id="content">
+				<p class="lead">Share your information in a secure and simple way.</p>
+				<p>The system creates a url hash and one time code that could be shared with another person through different channels. The content is only valid one time.</p>
+
+				<form role="form" id="encrypt" method="post">
+					<div class="form-group">
+						<textarea class="form-control" rows="3" placeholder="Information you like to share" id="text" name="text"></textarea>
+					</div>
+					<button type="submit" class="btn btn-primary">Share</button>
+				</form>
+			</div>
+		</div>
+
+		<div id="footer">
+			<div class="container">
+				<p class="text-muted">&copy; 2014 SkyLime</p>
+			</div>
+		</div>
+	</body>
+</html>

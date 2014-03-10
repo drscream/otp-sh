@@ -16,30 +16,33 @@ function encrypt(data, siteSecret, cb) {
 	cb(ctext, password)
 }
 
-/* GET home page. */
-exports.index = function(req, res){
-	res.render('encrypt-index', { title: 'otp.sh' })
-};
-
 exports.encrypt = function(req, res) {
 	var expireTime = process.env.EXPIRE_TIME || 7200;
 	var sliceCount = process.env.SLICE_COUNT || -6;
 
 	if(process.env.SITE_SECRET == undefined) {
-		res.render('error', { message: 'blub', error: 'bla'})
+		res.json(500, { 'error': 'Environment variable SITE_SECRET required' })
 		return
 	}
+	console.log(req.body)
+	if(req.body.text == undefined) {
+		res.json(510, { 'error': 'Missing POST parameter "text"' })
+		return
+	}
+
 	var siteSecret = process.env.SITE_SECRET
-	encrypt(req.body.plain, siteSecret, function(ctext, password) {
-		url = password.slice(0, sliceCount)
-		otp = password.slice(sliceCount)
-		db.set(url, ctext, function(err, reply) {
+	encrypt(req.body.text, siteSecret, function(ctext, password) {
+		var hash = password.slice(0, sliceCount)
+		var otp  = password.slice(sliceCount)
+		var url  = req.protocol + '://' + req.headers.host + req.url + hash
+
+		db.set(hash, ctext, function(err, reply) {
 			if(err) {
-				res.render('error')
+				res.json(500, { 'error': 'Database insert error' })
 				return
 			}
-			db.expire(url, expireTime)
-			res.render('encrypt-result', { url: url, otp: otp })
+			db.expire(hash, expireTime)
+			res.json(200, { 'url': url, 'hash': hash, 'otp': otp })
 		})
 	})
 };
