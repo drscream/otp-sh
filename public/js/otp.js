@@ -7,9 +7,11 @@ $(function() {
 	var alertTemplate   = Handlebars.compile($('#alert-template').html())
 
 	$('#encrypt').submit(function( event ) {
-		$.post( api, $(this).serialize(), function( data ) {
-			$('#content').html(shareTemplate(data))
-		}, "json")
+		if ($("#text").val()) {
+			$.post( api, $(this).serialize(), function( data ) {
+				$('#content').html(shareTemplate(data))
+			}, "json")
+		}
 		event.preventDefault();
 	})
 
