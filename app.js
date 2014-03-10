@@ -6,11 +6,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var redis  = require("redis");
-var db     = redis.createClient();
-
 var routes = require('./routes');
-var users = require('./routes/user');
 
 var app = express();
 
@@ -27,7 +23,6 @@ app.use(app.router);
 
 app.get('/', routes.index);
 app.post('/', routes.index.post);
-app.get('/users', users.list);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
