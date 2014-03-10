@@ -1,0 +1,11 @@
+extends layout
+
+block content
+	h1= title
+	hr
+	form(method='post')
+		div
+			label(for='otp') OTP
+			input(id='otp', type='text', name='otp')
+		div#submit
+			input(type='submit')
