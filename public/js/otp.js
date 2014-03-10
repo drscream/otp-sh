@@ -15,7 +15,13 @@ $(function() {
 
 	var hash = location.hash.replace('#', '')
 	if(hash) {
-		$('#content').html(decryptTemplate())
+		$.get( api + '/' + hash)
+			.done(function(data) {
+				$('#content').html(decryptTemplate())
+			})
+			.fail(function(xhr, textStatus, errorThrown) {
+				$('#info').html(alertTemplate(xhr.responseJSON))
+			})
 	}
 
 	$('#decrypt').submit(function( event ) {
@@ -24,8 +30,8 @@ $(function() {
 				$('#content').html(resultTemplate(data))
 			}, "json")
 			.fail(function(xhr, textStatus, errorThrown) {
-				$(".alert").alert()
-			})
+				$('#info').html(alertTemplate(xhr.responseJSON))
+			}, "json")
 		event.preventDefault();
 	})
 })

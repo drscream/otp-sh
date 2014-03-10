@@ -19,6 +19,12 @@
 			<div class="page-header">
 				<h1>otp.sh</h1>
 			</div>
+			<script id="alert-template" type="text/x-handlebars-template">
+				<div class="alert alert-danger alert-dismissable">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					<strong>Error! </strong> {{ error }}
+				</div>
+			</script>
 			<script id="share-template" type="text/x-handlebars-template">
 				<h2>Share</h2>
 				<p>Send the link via email to your friend and tell him the OTP with another channel.</p>
@@ -39,6 +45,7 @@
 			</script>
 			<script id="decrypt-template" type="text/x-handlebars-template">
 				<h2>Decrypt</h2>
+				<div id="info"></div>
 				<p>Insert your OTP to decrypt the message from the sender.</p>
 				<form role="form" id="decrypt" method="post">
 					<div class="form-group">
@@ -57,6 +64,7 @@
 				<p class="lead">Share your information in a secure and simple way.</p>
 				<p>The system creates a url hash and one time code that could be shared with another person through different channels. The content is only valid one time.</p>
 
+				<div id="info"></div>
 				<form role="form" id="encrypt" method="post">
 					<div class="form-group">
 						<textarea class="form-control" rows="3" placeholder="Information you like to share" id="text" name="text"></textarea>
