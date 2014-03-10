@@ -1,6 +1,6 @@
 var crypto = require('crypto')
 var redis  = require("redis")
-var db     = redis.createClient()
+var db     = redis.createClient(6379, 'localhost', { return_buffers: true })
 
 db.on("error", console.log)
 
@@ -18,25 +18,28 @@ function encrypt(data, siteSecret, cb) {
 
 /* GET home page. */
 exports.index = function(req, res){
-	res.render('index', { title: 'otp.sh' })
+	res.render('encrypt-index', { title: 'otp.sh' })
 };
 
-exports.index.post = function(req, res) {
+exports.encrypt = function(req, res) {
+	var expireTime = process.env.EXPIRE_TIME || 7200;
+	var sliceCount = process.env.SLICE_COUNT || -6;
+
 	if(process.env.SITE_SECRET == undefined) {
 		res.render('error', { message: 'blub', error: 'bla'})
 		return
 	}
 	var siteSecret = process.env.SITE_SECRET
 	encrypt(req.body.plain, siteSecret, function(ctext, password) {
-		url = password.slice(0, -4)
-		otp = password.slice(-4)
+		url = password.slice(0, sliceCount)
+		otp = password.slice(sliceCount)
 		db.set(url, ctext, function(err, reply) {
 			if(err) {
 				res.render('error')
 				return
 			}
-			db.expire(url, 1)
-			res.render('index-result', { url: url, otp: otp })
+			db.expire(url, expireTime)
+			res.render('encrypt-result', { url: url, otp: otp })
 		})
 	})
 };

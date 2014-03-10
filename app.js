@@ -1,12 +1,12 @@
-var express = require('express');
-var http = require('http');
-var path = require('path');
-var favicon = require('static-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
+var express    = require('express');
+var http       = require('http');
+var path       = require('path');
+var favicon    = require('static-favicon');
+var logger     = require('morgan');
 var bodyParser = require('body-parser');
 
-var routes = require('./routes');
+var encrypt = require('./routes/encrypt');
+var decrypt = require('./routes/decrypt')
 
 var app = express();
 
@@ -17,12 +17,13 @@ app.set('view engine', 'jade');
 app.use(favicon());
 app.use(logger('dev'));
 app.use(bodyParser());
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(app.router);
 
-app.get('/', routes.index);
-app.post('/', routes.index.post);
+app.get('/',  encrypt.index);
+app.post('/', encrypt.encrypt);
+app.get('/:hash',  decrypt.index);
+app.post('/:hash', decrypt.decrypt)
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
