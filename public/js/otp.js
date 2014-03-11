@@ -1,5 +1,5 @@
 $(function() {
-	var api = 'http://127.0.0.1:3000'
+	var api = 'https://api.otp.sh'
 
 	var shareTemplate   = Handlebars.compile($('#share-template').html())
 	var decryptTemplate = Handlebars.compile($('#decrypt-template').html())
