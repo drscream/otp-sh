@@ -2,7 +2,7 @@
   "name": "otp-sh",
   "version": "0.0.1",
   "author": "Thomas Merkel <tm@core.io>",
-  "description": "Web application to share information with two factor authentication.",
+  "description": "Web application to share information with simple one time password.",
   "keywords": [
     "otp",
     "web",
