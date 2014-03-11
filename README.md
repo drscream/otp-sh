@@ -16,10 +16,43 @@ to jump into the connection from client to the server.
 
 - nodejs
 - redis
-- nginx or another webserver
+- nginx or another webserver with ssl support
+- hiredis (optional)
 
 All required node modules could be installed with `pip install`. The `redis`
 server should be configured to disallow key storage on the disk.
+
+## Installation and usage
+
+I'm using SmartOS do deploy this service, but this should also work on different
+operating systems as well.
+
+Install the requirements first with your lovely package manager. The installation
+of `hiredis` improve the performance for the nodejs redis module.
+
+	pkgin install nodejs redis nginx
+
+Configure `redis` to save the data only in memory.
+
+	# Remove or comment the `save` options
+	vim /opt/local/etc/redis.conf
+	
+	# Use `sed` instead of `vim``
+	sed -i 's:^save:#save:g' /opt/local/etc/redis.conf
+
+Clone the repository for example into `/var/www`.
+
+	cd /var/www
+	git clone https://github.com/drscream/otp-sh.git
+
+You should run the API (the nodejs application) as user behind a ssl proxy server,
+for example `nginx`. I also recommend to use two sub domains for the API and the
+static content.
+
+- api.otp.sh: the nodejs application
+- www.otp.sh: static content from the `public` folder
+
+
 
 ## Crypto
 
@@ -45,3 +78,4 @@ user +-|-&gt; | plain | +----------------&gt; | encrypt | +----&gt; | crypt txt 
        |                                                                       |
        |                                                                       |
        +                                                                       +</pre>
+
