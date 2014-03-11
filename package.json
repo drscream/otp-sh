@@ -1,17 +1,34 @@
 {
-  "name": "application-name",
+  "name": "otp-sh",
   "version": "0.0.1",
-  "private": true,
+  "author": "Thomas Merkel <tm@core.io>",
+  "description": "Web application to share information with two factor authentication.",
+  "keywords": [
+    "otp",
+    "web",
+    "share"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/drscream/otp-sh.git"
+  }
   "scripts": {
     "start": "node ./bin/www"
   },
   "dependencies": {
     "express": "~3.4.8",
-    "static-favicon": "~1.0.0",
     "morgan": "~1.0.0",
-    "cookie-parser": "~1.0.1",
     "body-parser": "~1.0.0",
     "debug": "~0.7.4",
-    "jade": "~1.3.0"
-  }
+    "redis": "~0.10.1"
+  },
+  "optionalDependencies": {
+    "hiredis": "~0.1.16"
+  },
+  "licenses": [
+    {
+      "name": "BSD",
+      "url": "http://opensource.org/licenses/BSD-3-Clause"
+    }
+  ]
 }
