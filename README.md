@@ -24,24 +24,24 @@ server should be configured to disallow key storage on the disk.
 ## Crypto
 
 <pre>
-       +                                                                        +
-       |                                                                        |
-       |                                +---------+                             |
-user +-|-&gt; | plain | +----------------&gt; | encrypt | +---&gt; | crypt txt | +----------&gt; db
-       |                                +---------+                             |
-       |       +                                                                |
-       |       |                              ^                     +--&gt;|url| +----&gt; email
-       |       v                              |                     |           |
-       |                                      +                     |           |
-       |     +---+        +------+                        +-------+ |           |
-       |     | + |+-----&gt; | hash | +-----&gt; | key | +----&gt; | split |-+           |
-       |     +---+        +------+                        +-------+ |           |
-       |                                                            |           |
-       |       ^                                                    |           |
-       |       |                                                    +--&gt;|otp| +----&gt; phone
-       |       +                                                                |
-       |                                                                        |
-       |   |site sec|                                                           |
-       |                                                                        |
-       |                                                                        |
-       +                                                                        +</pre>
+       +                                                                       +
+       |                                                                       |
+       |                                +---------+                            |
+user +-|-&gt; | plain | +----------------&gt; | encrypt | +----&gt; | crypt txt | +--------&gt; db
+       |                                +---------+                            |
+       |       +                                                               |
+       |       |                              ^                    +--&gt;|url| +----&gt; email
+       |       v                              |                    |           |
+       |                                      +                    |           |
+       |     +---+        +------+                       +-------+ |           |
+       |     | + |+-----&gt; | hash | +-----&gt; | key | +---&gt; | split |-+           |
+       |     +---+        +------+                       +-------+ |           |
+       |                                                           |           |
+       |       ^                                                   |           |
+       |       |                                                   +--&gt;|otp| +----&gt; phone
+       |       +                                                               |
+       |                                                                       |
+       |   |site sec|                                                          |
+       |                                                                       |
+       |                                                                       |
+       +                                                                       +</pre>
