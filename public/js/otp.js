@@ -6,34 +6,40 @@ $(function() {
 	var resultTemplate  = Handlebars.compile($('#result-template').html())
 	var alertTemplate   = Handlebars.compile($('#alert-template').html())
 
+	var hash = location.hash.replace('#', '')
+
 	$('#encrypt').submit(function( event ) {
 		if ($("#text").val()) {
-			$.post( api, $(this).serialize(), function( data ) {
-				$('#content').html(shareTemplate(data))
-			}, "json")
+			$.post( api, $(this).serialize())
+				.done(function( data ) {
+					$('#content').html(shareTemplate(data))
+				}, "json")
+				.fail(function(xhr, textStatus, errorThrown) {
+					$('#info').html(alertTemplate({ error: 'Backend not reachable, come back later.' }))
+				}, "json")
 		}
 		event.preventDefault();
 	})
-
-	var hash = location.hash.replace('#', '')
+	
 	if(hash) {
 		$.get( api + '/' + hash)
 			.done(function(data) {
 				$('#content').html(decryptTemplate())
+				
+				$('#decrypt').submit(function( event ) {
+					$.post( api + '/' + hash, $(this).serialize())
+						.done(function( data ) {
+							$('#content').html(resultTemplate(data))
+						}, "json")
+						.fail(function(xhr, textStatus, errorThrown) {
+							$('#info').html(alertTemplate(xhr.responseJSON))
+						}, "json")
+					event.preventDefault();
+				})
 			})
 			.fail(function(xhr, textStatus, errorThrown) {
 				$('#info').html(alertTemplate(xhr.responseJSON))
 			})
 	}
 
-	$('#decrypt').submit(function( event ) {
-		$.post( api + '/' + hash, $(this).serialize())
-			.done(function( data ) {
-				$('#content').html(resultTemplate(data))
-			}, "json")
-			.fail(function(xhr, textStatus, errorThrown) {
-				$('#info').html(alertTemplate(xhr.responseJSON))
-			}, "json")
-		event.preventDefault();
-	})
 })

@@ -24,7 +24,6 @@ exports.encrypt = function(req, res) {
 		res.json(500, { 'error': 'Environment variable SITE_SECRET required' })
 		return
 	}
-	console.log(req.body)
 	if(req.body.text == undefined) {
 		res.json(510, { 'error': 'Missing POST parameter "text"' })
 		return
