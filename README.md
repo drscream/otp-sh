@@ -23,7 +23,7 @@ server should be configured to disallow key storage on the disk.
 
 ## Crypto
 
-```
+<pre>
           +                                                                              +
           |                                                                              |
           |                                      +---------+                             |
@@ -44,5 +44,4 @@ server should be configured to disallow key storage on the disk.
           |   |site sec|                                                                 |
           |                                                                              |
           |                                                                              |
-          +                                                                              +
-```
+          +                                                                              +</pre>
