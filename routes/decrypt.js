@@ -26,6 +26,7 @@ exports.decrypt = function(req, res) {
 	db.get(req.params.hash, function(err, data) {
 		try {
 			plain = decrypt(data, password)
+			db.del(req.params.hash)
 			res.json(200, { 'text': plain.toString('utf-8') })
 		} catch(err) {
 			res.json(403, { 'error': 'Decrypt not possible' })
